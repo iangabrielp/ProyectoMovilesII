@@ -26,6 +26,7 @@ export default function RegistroScreen() {
       password: contrasena
     });
 
+
   }
 
 
@@ -105,6 +106,4 @@ const styles = StyleSheet.create({
   }
 })
 
-function then(arg0: () => void) {
-  throw new Error('Function not implemented.');
-}
+
