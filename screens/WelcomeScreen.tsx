@@ -10,7 +10,7 @@ export default function WelcomeScreen({navigation} : any) {
       <Text style={{fontSize:30, color:'white'}}>Group 3 Games</Text>
       <Button 
        title='LOGIN'
-       onPress={()=> navigation.navigate('Bottom')}
+       onPress={()=> navigation.navigate('Login')}
        />
        <Button 
        title='REGISTRATE'
