@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ref, set } from "firebase/database";
 import { db } from '../config/Config';
@@ -8,21 +8,34 @@ export default function RegistroScreen() {
   const [nombre, setnombre] = useState('')
   const [edad, setedad] = useState(0)
   const [correo, setcorreo] = useState('')
-  const [contrasena, setcontrasena] = useState('');
+  const [contrasena, setcontrasena] = useState('')
+  const [confirmarContrasena, setConfirmarContrasena] = useState('');
 
 
   function guardar() {
+    if (contrasena !== confirmarContrasena) {
+      Alert.alert('Error', 'La contraseña no coincide');
+      return;
+    }
+
+
     set(ref(db, 'usuarios/' + cedula), {
       name: nombre,
       age: edad,
       email: correo,
       password: contrasena
     });
+
   }
 
+
   function limpiar() {
-    setnombre('')
-    setedad(0)
+    setnombre('');
+    setedad(0);
+    setcorreo('');
+    setcedula('');
+    setcontrasena('');
+    setConfirmarContrasena('');
   }
 
   useEffect(() => {
@@ -65,8 +78,16 @@ export default function RegistroScreen() {
         style={styles.input}
         secureTextEntry={true}
         onChangeText={(texto) => setcontrasena(texto)}
+        value={contrasena}
       />
 
+<TextInput
+        placeholder="Confirmar contraseña"
+        style={styles.input}
+        secureTextEntry={true}
+        onChangeText={(texto) => setConfirmarContrasena(texto)}
+        value={confirmarContrasena}
+      />
       <Button title='Guardar' onPress={() => guardar()} />
 
     </View>
@@ -83,3 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   }
 })
+
+function then(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
