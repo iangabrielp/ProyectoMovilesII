@@ -14,7 +14,7 @@ export default function WelcomeScreen({navigation} : any) {
        />
        <Button 
        title='REGISTRATE'
-       onPress={()=> navigation.navigate('Bottom')}
+       onPress={()=> navigation.navigate('Registro')}
        />
     </ImageBackground>
   )
