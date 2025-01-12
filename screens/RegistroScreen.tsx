@@ -1,7 +1,8 @@
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ref, set } from "firebase/database";
 import { db } from '../config/Config';
+import { styles } from '../Theme/appTheme';
 
 export default function RegistroScreen() {
   const [cedula, setcedula] = useState('')
@@ -46,12 +47,13 @@ export default function RegistroScreen() {
 
 
   return (
-    <View>
-      <Text>FORMULARIO</Text>
+    <ImageBackground source={require('../assets/img/BGRegister.png')} style={{...styles.contenedorAll, paddingLeft:25, paddingRight:25}}>
+      <Text style={styles.h1LogReg}>REGISTRO</Text>
       <TextInput
         placeholder='Ingresar un ID'
         style={styles.input}
         onChangeText={(texto) => setcedula(texto)}
+        placeholderTextColor={'#f27e95'}
       />
 
       <TextInput
@@ -59,17 +61,20 @@ export default function RegistroScreen() {
         style={styles.input}
         onChangeText={(texto) => setnombre(texto)}
         value={nombre}
+        placeholderTextColor={'#f27e95'}
       />
       <TextInput
         placeholder='Ingresar edad'
         style={styles.input}
         onChangeText={(texto) => setedad(+texto)}
         value={edad.toString()}
+        placeholderTextColor={'#f27e95'}
       />
       <TextInput
         placeholder='Ingresar correo'
         style={styles.input}
         onChangeText={(texto) => setcorreo(texto)}
+        placeholderTextColor={'#f27e95'}
       />
 
 <TextInput
@@ -78,6 +83,7 @@ export default function RegistroScreen() {
         secureTextEntry={true}
         onChangeText={(texto) => setcontrasena(texto)}
         value={contrasena}
+        placeholderTextColor={'#f27e95'}
       />
 
 <TextInput
@@ -86,22 +92,12 @@ export default function RegistroScreen() {
         secureTextEntry={true}
         onChangeText={(texto) => setConfirmarContrasena(texto)}
         value={confirmarContrasena}
+        placeholderTextColor={'#f27e95'}
       />
-      <Button title='Guardar' onPress={() => guardar()} />
+      <TouchableOpacity onPress={() => guardar()} style={styles.btnRegLog}>
+        <Text style={styles.h1btn}>Confirmar</Text>
+      </TouchableOpacity>
 
-    </View>
+    </ImageBackground>
   )
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 8,
-    borderRadius: 4,
-  }
-})
-
-
