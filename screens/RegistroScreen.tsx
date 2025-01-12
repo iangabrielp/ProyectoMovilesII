@@ -26,9 +26,7 @@ export default function RegistroScreen() {
       password: contrasena
     });
 
-
   }
-
 
   function limpiar() {
     setnombre('');
