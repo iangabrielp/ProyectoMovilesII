@@ -25,6 +25,11 @@ export default function RegistroScreen() {
       age: edad,
       email: correo,
       password: contrasena
+    }).then(() => {
+      limpiar();  // Limpia el formulario después de guardar
+      Alert.alert('Éxito', 'Usuario registrado correctamente');
+    }).catch((error) => {
+      Alert.alert('Error', 'Hubo un problema al guardar los datos');
     });
 
   }
