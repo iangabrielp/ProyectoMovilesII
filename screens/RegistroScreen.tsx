@@ -1,7 +1,7 @@
 import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { ref, set } from "firebase/database";
-import { db } from '../config/Config';
+import { auth } from '../config/Config'
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth'
 import { styles } from '../Theme/appTheme';
 
 export default function RegistroScreen() {
@@ -9,23 +9,57 @@ export default function RegistroScreen() {
   const [nombre, setnombre] = useState('')
   const [edad, setedad] = useState(0)
   const [correo, setcorreo] = useState('')
-  const [contrasena, setcontrasena] = useState('')
+  const [contrasenia, setcontrasenia] = useState('')
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
 
 
-  function guardar() {
-    if (contrasena !== confirmarContrasena) {
-      Alert.alert('Error', 'La contraseña no coincide');
+
+
+  function registro() {
+    if (contrasenia !== confirmarContrasena) {
+      Alert.alert("Error", "La contraseña no coincide")
+      return
+    }
+    if (!correo.includes('@')) {
+      Alert.alert("Error", "Por favor ingresa un correo válido");
+      return;
+    }
+    if (cedula.trim() === '' || nombre.trim() === '' || edad <= 0) {
+      Alert.alert("Error", "Por favor completa todos los campos correctamente");
       return;
     }
 
+    createUserWithEmailAndPassword(auth, correo, contrasenia)
+      .then((userCredential) => {
+        const user = userCredential.user
+        sendEmailVerification(user)
+        .then(() => {
+          Alert.alert("Éxito", "Registro exitoso. Por favor verifica tu correo.");
+          limpiar();
+        })
+        .catch((error) => {
+          Alert.alert("Error", "No se pudo enviar el correo de verificación.");
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert("Error", errorMessage);
+      })
+  }
 
-    set(ref(db, 'usuarios/' + cedula), {
-      name: nombre,
-      age: edad,
-      email: correo,
-      password: contrasena
-    });
+  function verificar() {
+    if (auth.currentUser) {
+      sendEmailVerification(auth.currentUser)
+        .then(() => {
+          Alert.alert('¡Listo!', 'Por favor verifique su correo ')
+        })
+        .catch((error) => {
+          Alert.alert("Error", error.message);
+        });
+    } else {
+
+    }
 
   }
 
@@ -34,12 +68,12 @@ export default function RegistroScreen() {
     setedad(0);
     setcorreo('');
     setcedula('');
-    setcontrasena('');
+    setcontrasenia('');
     setConfirmarContrasena('');
   }
 
   useEffect(() => {
-    if (Number.isNaN(edad)) {
+    if (Number.isNaN(cedula)) {
       setedad(0)
     }
   }
@@ -47,12 +81,13 @@ export default function RegistroScreen() {
 
 
   return (
-    <ImageBackground source={require('../assets/img/BGRegister.png')} style={{...styles.contenedorAll, paddingLeft:25, paddingRight:25}}>
+    <ImageBackground source={require('../assets/img/BGRegister.png')} style={{ ...styles.contenedorAll, paddingLeft: 25, paddingRight: 25 }}>
       <Text style={styles.h1LogReg}>REGISTRO</Text>
       <TextInput
         placeholder='Ingresar un ID'
         style={styles.input}
         onChangeText={(texto) => setcedula(texto)}
+        value={cedula}
         placeholderTextColor={'#f27e95'}
       />
 
@@ -74,19 +109,20 @@ export default function RegistroScreen() {
         placeholder='Ingresar correo'
         style={styles.input}
         onChangeText={(texto) => setcorreo(texto)}
+        value={correo}
         placeholderTextColor={'#f27e95'}
       />
 
-<TextInput
+      <TextInput
         placeholder="Ingresar contraseña"
         style={styles.input}
         secureTextEntry={true}
-        onChangeText={(texto) => setcontrasena(texto)}
-        value={contrasena}
+        onChangeText={(texto) => setcontrasenia(texto)}
+        value={contrasenia}
         placeholderTextColor={'#f27e95'}
       />
 
-<TextInput
+      <TextInput
         placeholder="Confirmar contraseña"
         style={styles.input}
         secureTextEntry={true}
@@ -94,7 +130,7 @@ export default function RegistroScreen() {
         value={confirmarContrasena}
         placeholderTextColor={'#f27e95'}
       />
-      <TouchableOpacity onPress={() => guardar()} style={styles.btnRegLog}>
+      <TouchableOpacity onPress={() => registro()} style={styles.btnRegLog}>
         <Text style={styles.h1btn}>Confirmar</Text>
       </TouchableOpacity>
 
