@@ -4,7 +4,7 @@ import { ref, set } from "firebase/database";
 import { db } from '../config/Config';
 import { styles } from '../Theme/appTheme';
 
-export default function RegistroScreen() {
+export default function RegistroScreen(props:any) {
   const [cedula, setcedula] = useState('')
   const [nombre, setnombre] = useState('')
   const [edad, setedad] = useState(0)
