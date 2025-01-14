@@ -12,7 +12,7 @@ export default function PerfileScreen({  }) {
 
   return (
     <ImageBackground
-      source={require('../assets/img/BGProfile.png')} // Cambia la imagen de fondo si es necesario
+      source={require('../assets/img/BGRegister.png')} // Cambia la imagen de fondo si es necesario
       style={styles.container}
     >
       <Text style={styles.title}>Perfil del Usuario</Text>
