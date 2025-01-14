@@ -116,6 +116,7 @@ export default function RegistroScreen() {
         value={confirmarContrasena}
         placeholderTextColor={'#f27e95'}
       />
+      
       <View style={styles.btnRegLog} >
       <Button title="Subir foto" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={styles.image} />}
