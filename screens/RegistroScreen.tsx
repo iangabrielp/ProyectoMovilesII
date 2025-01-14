@@ -1,8 +1,10 @@
-import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View,Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ref, set } from "firebase/database";
 import { db } from '../config/Config';
 import { styles } from '../Theme/appTheme';
+import * as ImagePicker from 'expo-image-picker';
+
 
 export default function RegistroScreen() {
   const [cedula, setcedula] = useState('')
@@ -11,6 +13,21 @@ export default function RegistroScreen() {
   const [correo, setcorreo] = useState('')
   const [contrasena, setcontrasena] = useState('')
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
+
+  const [image, setImage] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
 
   function guardar() {
@@ -99,6 +116,11 @@ export default function RegistroScreen() {
         value={confirmarContrasena}
         placeholderTextColor={'#f27e95'}
       />
+      <View style={styles.btnRegLog} >
+      <Button title="Subir foto" onPress={pickImage} />
+      {image && <Image source={{ uri: image }} style={styles.image} />}
+    </View>
+    
       <TouchableOpacity onPress={() => guardar()} style={styles.btnRegLog}>
         <Text style={styles.h1btn}>Confirmar</Text>
       </TouchableOpacity>
@@ -106,3 +128,4 @@ export default function RegistroScreen() {
     </ImageBackground>
   )
 }
+
