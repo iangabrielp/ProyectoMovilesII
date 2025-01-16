@@ -6,7 +6,7 @@ import { styles } from '../Theme/appTheme';
 import * as ImagePicker from 'expo-image-picker';
 
 
-export default function RegistroScreen() {
+export default function RegistroScreen(props:any) {
   const [cedula, setcedula] = useState('')
   const [nombre, setnombre] = useState('')
   const [edad, setedad] = useState(0)
@@ -49,19 +49,38 @@ export default function RegistroScreen() {
     createUserWithEmailAndPassword(auth, correo, contrasenia)
       .then((userCredential) => {
         const user = userCredential.user
-        sendEmailVerification(user)
-        .then(() => {
-          Alert.alert("Éxito", "Registro exitoso. Por favor verifica tu correo.");
-          limpiar();
-        })
-        .catch((error) => {
-          Alert.alert("Error", "No se pudo enviar el correo de verificación.");
-        });
+        verificar();
+        limpiar();
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        Alert.alert("Error", errorMessage);
+        let titulo
+        let mensaje
+
+        switch (errorCode) {
+          case 'auth/email-already-exists':
+            titulo = 'Error en el correo'
+            mensaje = 'El correo ya está en uso'
+            limpiar()
+            break;
+          case 'auth/invalid-argument':
+            titulo = 'Error'
+            mensaje = 'Argumento no válido proporcionado.'
+            limpiar()
+            break;
+          case 'auth/invalid-credential':
+            titulo = 'Error inesperado'
+            mensaje = 'La credencial no es válida para la acción deseada.'
+            limpiar()
+            break;
+          default:
+            titulo = 'Error'
+            mensaje = 'Verificar credenciales'
+            limpiar()
+            break;
+        }
+        Alert.alert(titulo, mensaje)
       })
   }
 
@@ -75,9 +94,7 @@ export default function RegistroScreen() {
           Alert.alert("Error", error.message);
         });
     } else {
-
     }
-
   }
 
   function limpiar() {

@@ -7,7 +7,7 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 export default function LogInScreen({ navigation }: any) {
 
   const [correo, setcorreo] = useState('')
-  const [contrasenia, setcontraseña] = useState('')
+  const [contrasenia, setcontrasenia] = useState('')
   const [ver, setver] = useState(false)
 
   const [correoRestablecer, setCorreoRestablecer] = useState('')
@@ -24,17 +24,27 @@ export default function LogInScreen({ navigation }: any) {
         let titulo
         let mensaje
 
-        if (errorCode == 'auth/wrong-password') {
-          titulo = 'Error en la contrasenia'
-          mensaje = 'Contraseña incorrecta. Verificar'
-        }
-        else if (errorCode == 'auth/user-not-found') {
-          titulo = 'Usuario no encontrado'
-          mensaje = 'Por favor verificar el email ingresado'
-        }
-        else {
-          titulo = 'Error'
-          mensaje = 'Verificar credenciales'
+        switch (errorCode) {
+          case 'auth/wrong-password':
+            titulo = 'Error en la contrasenia'
+            mensaje = 'Contraseña incorrecta. Verificar'
+            limpiar()
+            break;
+          case 'auth/user-not-found':
+            titulo = 'Usuario no encontrado'
+            mensaje = 'Por favor verificar el email ingresado'
+            limpiar()
+            break;
+          case 'auth/internal-error':
+            titulo = 'Error interno'
+            mensaje = 'Error inesperado del servidor de autenticación.'
+            limpiar()
+            break;
+          default:
+            titulo = 'Error'
+            mensaje = 'Verificar credenciales'
+            limpiar()
+            break;
         }
 
         Alert.alert(titulo, mensaje)
@@ -52,7 +62,10 @@ export default function LogInScreen({ navigation }: any) {
         // ..
       });
   }
-
+  function limpiar() {
+    setcontrasenia('')
+    setcorreo('')
+  }
 
   return (
     <ImageBackground source={require('../assets/img/BGRegister.png')} style={{ ...styles.contenedorAll, paddingLeft: 25, paddingRight: 25 }}>
@@ -66,7 +79,7 @@ export default function LogInScreen({ navigation }: any) {
       <TextInput
         placeholder='Ingrese la contraseña'
         style={styles.input}
-        onChangeText={(texto) => setcontraseña(texto)}
+        onChangeText={(texto) => setcontrasenia(texto)}
         placeholderTextColor={'#f27e95'}
       />
       <TouchableOpacity style={styles.btnRegLog} onPress={() => login()}>
@@ -75,12 +88,12 @@ export default function LogInScreen({ navigation }: any) {
       <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
         <Text>Crear una cuenta</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>setver(true)}>
+      <TouchableOpacity onPress={() => setver(true)}>
         <Text>Olvidaste la contraseña? Da clic aquí</Text>
       </TouchableOpacity>
       <Modal visible={ver}>
         <View>
-          <TextInput placeholder='Ingresar correo' onChangeText={(texto)=>setCorreoRestablecer(texto)}/>
+          <TextInput placeholder='Ingresar correo' onChangeText={(texto) => setCorreoRestablecer(texto)} />
           <Button title='Enviar' onPress={() => restablecer()} />
           <Button title='Cerrar' onPress={() => setver(false)} />
         </View>
