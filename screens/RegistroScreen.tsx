@@ -1,10 +1,10 @@
 import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View,Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { auth } from '../config/Config'
+import { auth, db } from '../config/Config'
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth'
 import { styles } from '../Theme/appTheme';
+import { ref, set } from 'firebase/database';
 import * as ImagePicker from 'expo-image-picker';
-
 
 export default function RegistroScreen(props:any) {
   const [cedula, setcedula] = useState('')
@@ -18,7 +18,7 @@ export default function RegistroScreen(props:any) {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images', 'videos'],
+      mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -50,6 +50,7 @@ export default function RegistroScreen(props:any) {
       .then((userCredential) => {
         const user = userCredential.user
         verificar();
+        guardarDatosUsuario(user.uid);
         limpiar();
       })
       .catch((error) => {
@@ -97,6 +98,17 @@ export default function RegistroScreen(props:any) {
     }
   }
 
+  function guardarDatosUsuario(uid:String) {
+    const userRef = ref(db, 'usuarios/' + uid);
+    set(userRef,{
+      cedula:cedula,
+      nombre:nombre,
+      edad:edad,
+      correo:correo,
+      score:0
+    })
+  }
+
   function limpiar() {
     setnombre('');
     setedad(0);
@@ -118,7 +130,7 @@ export default function RegistroScreen(props:any) {
     <ImageBackground source={require('../assets/img/BGRegister.png')} style={{ ...styles.contenedorAll, paddingLeft: 25, paddingRight: 25 }}>
       <Text style={styles.h1LogReg}>REGISTRO</Text>
       <TextInput
-        placeholder='Ingresar un ID'
+        placeholder='Ingresar cédula'
         style={styles.input}
         onChangeText={(texto) => setcedula(texto)}
         value={cedula}
@@ -126,7 +138,7 @@ export default function RegistroScreen(props:any) {
       />
 
       <TextInput
-        placeholder='Ingresar Nombre'
+        placeholder='Ingresar Usuario'
         style={styles.input}
         onChangeText={(texto) => setnombre(texto)}
         value={nombre}
@@ -164,12 +176,6 @@ export default function RegistroScreen(props:any) {
         value={confirmarContrasena}
         placeholderTextColor={'#f27e95'}
       />
-      
-      <View style={styles.btnRegLog} >
-      <Button title="Subir foto" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={styles.image} />}
-    </View>
-    
       <TouchableOpacity onPress={() => registro()} style={styles.btnRegLog}>
         <Text style={styles.h1btn}>Confirmar</Text>
       </TouchableOpacity>
@@ -177,4 +183,3 @@ export default function RegistroScreen(props:any) {
     </ImageBackground>
   )
 }
-
