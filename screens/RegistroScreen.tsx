@@ -164,17 +164,13 @@ export default function RegistroScreen(props:any) {
         value={confirmarContrasena}
         placeholderTextColor={'#f27e95'}
       />
-<<<<<<< HEAD
       
       <View style={styles.btnRegLog} >
       <Button title="Subir foto" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={styles.image} />}
     </View>
     
-      <TouchableOpacity onPress={() => guardar()} style={styles.btnRegLog}>
-=======
       <TouchableOpacity onPress={() => registro()} style={styles.btnRegLog}>
->>>>>>> 58945859dfcdab866fc7fa5d49e92796ce5e9c20
         <Text style={styles.h1btn}>Confirmar</Text>
       </TouchableOpacity>
 

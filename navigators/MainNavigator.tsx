@@ -6,6 +6,8 @@ import LogInScreen from '../screens/LogInScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import GaleriaScreen from '../screens/GaleriaScreen';
 import CamaraScreen from '../screens/CamaraScreen';
+import PerfileScreen from '../screens/PerfilScreens';
+import SnakeGame from '../screens/SnakeGame';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator ()
@@ -23,10 +25,10 @@ function MyStack() {
 
 function MyTabs(){
   return(
-      <Tab.Navigator>
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Tab.Navigator >
+          <Stack.Screen name="Perfil" component={PerfileScreen} />
           <Stack.Screen name="Galeria" component={GaleriaScreen} />
-            <Stack.Screen name="Camara" component={CamaraScreen} />
+            <Stack.Screen name="SnakeGame" component={SnakeGame} />
       </Tab.Navigator>
   )
 }

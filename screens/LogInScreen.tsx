@@ -19,7 +19,7 @@ export default function LogInScreen({ navigation }: any) {
         navigation.navigate('Welcome')
       })
       .catch((error) => {
-        const errorCode = error.code;
+        const errorCode = error.code; 
         const errorMessage = error.message;
         let titulo
         let mensaje
