@@ -1,6 +1,6 @@
 import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View,Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { auth, db } from '../config/Config'
+import { auth } from '../config/Config';
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth'
 import { styles } from '../Theme/appTheme';
 import { ref, set } from 'firebase/database';
