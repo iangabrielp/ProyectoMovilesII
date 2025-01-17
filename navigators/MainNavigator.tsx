@@ -3,11 +3,12 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import RegistroScreen from '../screens/RegistroScreen';
 import LogInScreen from '../screens/LogInScreen';
-import PerfileScreen from '../screens/PerfilScreens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import GaleriaScreen from '../screens/GaleriaScreen';
+import CamaraScreen from '../screens/CamaraScreen';
 
 const Stack = createStackNavigator();
-const Tap = createBottomTabNavigator()
+const Tab = createBottomTabNavigator ()
 
 function MyStack() {
   return (
@@ -15,16 +16,18 @@ function MyStack() {
       <Stack.Screen name="Home" component={WelcomeScreen} />
       <Stack.Screen name="Registro" component={RegistroScreen} />
       <Stack.Screen name="Login" component={LogInScreen} />
-      <Stack.Screen name="Welcome" component={MyTaps} />
+      <Stack.Screen name="Welcome" component={MyTabs} />
     </Stack.Navigator>
   );
 }
 
-function MyTaps(){
+function MyTabs(){
   return(
-    <Tap.Navigator>
-      <Tap.Screen name="Perfil" component={PerfileScreen}/>
-    </Tap.Navigator>
+      <Tab.Navigator>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Galeria" component={GaleriaScreen} />
+            <Stack.Screen name="Camara" component={CamaraScreen} />
+      </Tab.Navigator>
   )
 }
 

@@ -1,9 +1,10 @@
-import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View,Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth, db } from '../config/Config'
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth'
 import { styles } from '../Theme/appTheme';
 import { ref, set } from 'firebase/database';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function RegistroScreen(props:any) {
   const [cedula, setcedula] = useState('')
@@ -12,6 +13,21 @@ export default function RegistroScreen(props:any) {
   const [correo, setcorreo] = useState('')
   const [contrasenia, setcontrasenia] = useState('')
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
+
+  const [image, setImage] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
 
 
@@ -167,3 +183,4 @@ export default function RegistroScreen(props:any) {
     </ImageBackground>
   )
 }
+

@@ -37,5 +37,15 @@ export const styles = StyleSheet.create({
     borderRadius:16,
     padding:10,
     marginTop:5
-  }
+  },
+
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
 })
