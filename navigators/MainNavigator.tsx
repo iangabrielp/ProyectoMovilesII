@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import RegistroScreen from '../screens/RegistroScreen';
 import LogInScreen from '../screens/LogInScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import GaleriaScreen from '../screens/GaleriaScreen';
-import CamaraScreen from '../screens/CamaraScreen';
+import PerfileScreen from '../screens/PerfilScreens';
+import App from '../App';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator ()
@@ -24,9 +24,7 @@ function MyStack() {
 function MyTabs(){
   return(
       <Tab.Navigator>
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Galeria" component={GaleriaScreen} />
-            <Stack.Screen name="Camara" component={CamaraScreen} />
+          <Stack.Screen name="Perfil" component={PerfileScreen} />
       </Tab.Navigator>
   )
 }
