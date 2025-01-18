@@ -144,16 +144,16 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
       <Text style={styles.scoreText}>Puntuación: {score}</Text>
       <View style={styles.contenedorbtn}>
         <TouchableOpacity onPress={()=>setDirection('UP')}>
-          <Text style={styles.txt}>Up</Text>
+          <Text style={styles.txt}>👆🏻</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setDirection('DOWN')}>
-          <Text style={styles.txt}>Down</Text>
+          <Text style={styles.txt}>👇🏻</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setDirection('LEFT')}>
-          <Text style={styles.txt}>Left</Text>
+          <Text style={styles.txt}>👈🏻</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setDirection('RIGHT')}>
-          <Text style={styles.txt}>Right</Text>
+          <Text style={styles.txt}>👉🏻</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -163,13 +163,13 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#c79e52',
+    backgroundColor: '#327b44',
   },
   snakeSegment: {
     position: 'absolute',
     width: BOX_SIZE,
     height: BOX_SIZE,
-    backgroundColor: '#469e2e',
+    backgroundColor: '#164622',
   },
   food: {
     position: 'absolute',
@@ -190,10 +190,11 @@ const styles = StyleSheet.create({
     gap:20,
     position:'absolute',
     bottom:10,
-    marginLeft:30,
-    backgroundColor:'#7b7a32',
+    marginLeft:95,
+    backgroundColor:'#2d4e35',
     borderRadius:16,
-    paddingHorizontal:40
+    paddingHorizontal:20,
+    paddingVertical:5
   },
   txt:{
     color:'white',
