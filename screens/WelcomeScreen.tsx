@@ -22,9 +22,12 @@ export default function WelcomeScreen({ navigation }: any) {
             color="#2196F3"
           />
         </View>
+        <View style={styles.view}>
+        <Text style={{...styles.title1, marginBottom:5, fontWeight:'bold'}}>Participantes:</Text>
         <Text style={styles.title1}>Anthony Almeida</Text>
         <Text style={styles.title1}>Gabriel Olmedo</Text>
         <Text style={styles.title1}>Dennis Proaño</Text>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -56,10 +59,12 @@ const styles = StyleSheet.create({
     height: 10,
   },
   title1: {
-    fontSize: 10,
+    fontSize: 14,
     color: 'white',
-    fontWeight: 'bold',
-    marginBottom: 5,
-    textAlign: 'left',
+    marginBottom: 2,
+    textAlign: 'center',
   },
+  view:{
+    marginTop:20
+  }
 });
