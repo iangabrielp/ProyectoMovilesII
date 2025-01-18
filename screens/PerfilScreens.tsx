@@ -13,7 +13,6 @@ export default function PerfileScreen({ }) {
   const [correo, setcorreo] = useState('')
   const [score, setscore] = useState(0)
   const [edad, setedad] = useState(0)
-  const [recargar, setrecargar] = useState(true)
   
   const defaultImage = 'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png'
 
@@ -64,9 +63,7 @@ export default function PerfileScreen({ }) {
 
         <Text style={styles.label}>Correo:</Text>
         <Text style={styles.value}>{correo}</Text>
-        <TouchableOpacity onPress={()=>setrecargar(!recargar)}>
-          <Text>Regargar</Text>
-        </TouchableOpacity>
+
       </View>
     </ImageBackground>
   );

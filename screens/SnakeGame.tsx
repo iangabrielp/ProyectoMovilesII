@@ -144,16 +144,16 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
       <Text style={styles.scoreText}>Puntuación: {score}</Text>
       <View style={styles.contenedorbtn}>
         <TouchableOpacity onPress={()=>setDirection('UP')}>
-          <Text style={styles.txt}>🢁</Text>
+          <Text style={styles.txt}>Up</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setDirection('DOWN')}>
-          <Text style={styles.txt}>🢃</Text>
+          <Text style={styles.txt}>Down</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setDirection('LEFT')}>
-          <Text style={styles.txt}>🢀</Text>
+          <Text style={styles.txt}>Left</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setDirection('RIGHT')}>
-          <Text style={styles.txt}>🢂</Text>
+          <Text style={styles.txt}>Right</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -187,18 +187,18 @@ const styles = StyleSheet.create({
   contenedorbtn:{
     flexDirection:'row',
     justifyContent:'center',
-    gap:40,
+    gap:20,
     position:'absolute',
-    bottom:0,
-    marginLeft:60,
-    backgroundColor:'#015a28',
+    bottom:10,
+    marginLeft:30,
+    backgroundColor:'#7b7a32',
     borderRadius:16,
     paddingHorizontal:40
   },
   txt:{
     color:'white',
     textAlign:'center',
-    fontSize:44
+    fontSize:32
   }
 });
 
