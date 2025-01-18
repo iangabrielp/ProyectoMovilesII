@@ -4,8 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import RegistroScreen from '../screens/RegistroScreen';
 import LogInScreen from '../screens/LogInScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import GaleriaScreen from '../screens/GaleriaScreen';
-import CamaraScreen from '../screens/CamaraScreen';
 import PerfileScreen from '../screens/PerfilScreens';
 import SnakeGame from '../screens/SnakeGame';
 
@@ -27,8 +25,7 @@ function MyTabs(){
   return(
       <Tab.Navigator >
           <Stack.Screen name="Perfil" component={PerfileScreen} />
-          <Stack.Screen name="Galeria" component={GaleriaScreen} />
-            <Stack.Screen name="SnakeGame" component={SnakeGame} />
+          <Stack.Screen name="SnakeGame" component={SnakeGame} />
       </Tab.Navigator>
   )
 }
