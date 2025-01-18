@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, Alert, Text } from 'react-native';
+import { View, StyleSheet, Dimensions, Alert, Text, TouchableOpacity } from 'react-native';
 import { auth, db } from '../config/Config'; // Configura Firebase en tu archivo `Config.ts`
 import { collection, addDoc } from 'firebase/firestore';
-import { ref, set } from 'firebase/database';
+import { ref, set, update } from 'firebase/database';
 
 interface Position {
   x: number;
@@ -73,7 +73,7 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
     if (user) {
       try {
         const uid = user.uid;
-        set(ref(db, 'usuarios/' + uid), {
+        update(ref(db, 'usuarios/' + uid), {
           score:score
         })
         .then(() => {
@@ -108,7 +108,7 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
         `Tu puntuación final es: ${score}`,
         [
           { text: 'Reintentar', onPress: resetGame },
-          { text: 'Salir', onPress: () => navigation.navigate('LogInScreen') },
+          { text: 'Salir', onPress: () => navigation.navigate('Welcome') },
         ]
       );
       return;
@@ -142,6 +142,20 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
         ]}
       />
       <Text style={styles.scoreText}>Puntuación: {score}</Text>
+      <View style={styles.contenedorbtn}>
+        <TouchableOpacity onPress={()=>setDirection('UP')}>
+          <Text style={styles.txt}>🢁</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>setDirection('DOWN')}>
+          <Text style={styles.txt}>🢃</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>setDirection('LEFT')}>
+          <Text style={styles.txt}>🢀</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>setDirection('RIGHT')}>
+          <Text style={styles.txt}>🢂</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -149,13 +163,13 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#c79e52',
   },
   snakeSegment: {
     position: 'absolute',
     width: BOX_SIZE,
     height: BOX_SIZE,
-    backgroundColor: 'green',
+    backgroundColor: '#469e2e',
   },
   food: {
     position: 'absolute',
@@ -170,6 +184,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
   },
+  contenedorbtn:{
+    flexDirection:'row',
+    justifyContent:'center',
+    gap:40,
+    position:'absolute',
+    bottom:0,
+    marginLeft:60,
+    backgroundColor:'#015a28',
+    borderRadius:16,
+    paddingHorizontal:40
+  },
+  txt:{
+    color:'white',
+    textAlign:'center',
+    fontSize:44
+  }
 });
 
 export default SnakeGame;

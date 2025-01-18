@@ -12,8 +12,8 @@ export const styles = StyleSheet.create({
     fontSize:36,
     fontWeight:'700',
     textAlign:'center',
-    marginTop:20,
-    marginBottom:40
+    marginTop:0,
+    marginBottom:10
   },
   h1btn:{
     color:'white',
@@ -45,7 +45,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
+    borderRadius:100,
+    alignSelf:'center',
+    borderWidth:4,
+    borderColor:'white',
+    marginBottom:10
   },
 })
