@@ -1,4 +1,4 @@
-import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View,Image } from 'react-native'
+import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth, db } from '../config/Config';
 import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from 'firebase/auth'
@@ -6,7 +6,7 @@ import { styles } from '../Theme/appTheme';
 import { ref, set } from 'firebase/database';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function RegistroScreen(props:any) {
+export default function RegistroScreen(props: any) {
   const [cedula, setcedula] = useState('')
   const [nombre, setnombre] = useState('')
   const [edad, setedad] = useState(0)
@@ -14,9 +14,12 @@ export default function RegistroScreen(props:any) {
   const [contrasenia, setcontrasenia] = useState('')
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
 
+  const defaultImage = 'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png'
+
   const [image, setImage] = useState<string | null>(null);
 
-  const pickImage = async () => {
+  //Galería
+  const pickImageGal = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
@@ -24,13 +27,29 @@ export default function RegistroScreen(props:any) {
       quality: 1,
     });
 
+    console.log(result);
+
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
 
+  //Cámara
+  const pickImageCam = async () => {
 
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
 
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   function registro() {
     if (contrasenia !== confirmarContrasena) {
@@ -98,14 +117,14 @@ export default function RegistroScreen(props:any) {
     }
   }
 
-  function guardarDatosUsuario(uid:String) {
+  function guardarDatosUsuario(uid: String) {
     const userRef = ref(db, 'usuarios/' + uid);
-    set(userRef,{
-      cedula:cedula,
-      nombre:nombre,
-      edad:edad,
-      correo:correo,
-      score:0
+    set(userRef, {
+      cedula: cedula,
+      nombre: nombre,
+      edad: edad,
+      correo: correo,
+      score: 0
     })
   }
 
@@ -129,6 +148,9 @@ export default function RegistroScreen(props:any) {
   return (
     <ImageBackground source={require('../assets/img/BGRegister.png')} style={{ ...styles.contenedorAll, paddingLeft: 25, paddingRight: 25 }}>
       <Text style={styles.h1LogReg}>REGISTRO</Text>
+      <TouchableOpacity onPress={pickImageGal}>
+        <Image source={{ uri: image || defaultImage }} style={styles.image} />
+      </TouchableOpacity>
       <TextInput
         placeholder='Ingresar cédula'
         style={styles.input}

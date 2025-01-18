@@ -1,4 +1,4 @@
-import { Alert, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 
@@ -15,8 +15,6 @@ export default function PerfileScreen({ }) {
   const [edad, setedad] = useState(0)
   
   const defaultImage = 'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-profile-picture-male-icon.png'
-
-  const [datos, setdatos] = useState()
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -65,6 +63,7 @@ export default function PerfileScreen({ }) {
 
         <Text style={styles.label}>Correo:</Text>
         <Text style={styles.value}>{correo}</Text>
+
       </View>
     </ImageBackground>
   );
