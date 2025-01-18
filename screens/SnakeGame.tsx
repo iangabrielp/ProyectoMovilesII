@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, Alert, Text } from 'react-native';
 import { auth, db } from '../config/Config'; // Configura Firebase en tu archivo `Config.ts`
 import { collection, addDoc } from 'firebase/firestore';
+import { ref, set } from 'firebase/database';
 
 interface Position {
   x: number;
@@ -71,12 +72,17 @@ const SnakeGame: React.FC<{ navigation: any }> = ({ navigation }) => {
     const user = auth.currentUser;
     if (user) {
       try {
-        const docRef = await addDoc(collection(db, 'scores'), {
-          uid: user.uid,
-          score,
-          timestamp: new Date(),
+        const uid = user.uid;
+        set(ref(db, 'usuarios/' + uid), {
+          score:score
+        })
+        .then(() => {
+          console.log('Datos guardados correctamente');
+        })
+        .catch((error) => {
+          console.error('Error al guardar los datos: ', error);
         });
-        console.log('Score saved with ID:', docRef.id);
+        
       } catch (error) {
         console.error('Error saving score:', error);
       }
